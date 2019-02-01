@@ -2,7 +2,7 @@
 //prompt("what is your name?")
 
 //init game variables
-var iHouse = ["yeet", "corpse", "yeet", "yeet", "yeet", "yeet"];
+var iHouse = [null, null, "corpse", null, null, null];
 var iBasement = ["sword", null, null, null, null, null];
 var iClearing = ["flower", null, null, null, null, null];
 var rHouse = 0;
@@ -10,8 +10,9 @@ var rBasement = 1;
 var rClearing = 2;
 var rooms = [iHouse, iBasement, iClearing];
 var room = rHouse;
-var inventory = ["a letter from mom", null, null, null, null, null];
+var inventory = ["letter", null, null, null, null, null];
 
+var jimathy = false;
 
 var name = prompt("What! is your name?");
 var quest = prompt("What! is your quest?");
@@ -29,16 +30,33 @@ function Game() {
 
 function Room() {
     //check which room to use and figure out how to do it
+    var tempInv = "";
+    for(i = 0; i < 6; i++){
+        if(rooms[rHouse][i] != null){
+            if(tempInv == ""){
+                tempInv += rooms[rHouse][i];
+            }
+            else{
+                tempInv += " and a ";
+                tempInv += rooms[room][i];
+            }
+        }
+    }
     if (room == rHouse) {
-        alert("you find yourself in a small room filled with cobwebs. a musty smell permiates the air. there is a corpse sitting in the corner, its eyes sunken in and its dry cold skin wrapped tightly around it. there is a trap door laying on the floor underneath a disheveled carpet that has been obviously kicked aside. there is also a door to the south of you leading into a small clearing outside.");
+        if (jimathy == false){
+            alert("you find yourself in a small room filled with cobwebs. a musty smell permiates the air. there is a corpse sitting in the corner, its eyes sunken in and its dry cold skin wrapped tightly around it. there is a trap door laying on the floor underneath a disheveled carpet that has been obviously kicked aside. there is also a door to the south of you leading into a small clearing outside. on the floor there is a " + tempInv);
+        }
+        else{
+            alert("you find yourself in your holiday cabin. you have been here for years. times have been tough on you and your friend. Jimathy is laying dead in the corner. he has been there since the week after you got there. on the floor there ia a " + tempInv)
+        }
         PlayerMove();
     }
     else if (room == rBasement) {
-        alert("you have entered a small cramped cellar full of kegs of what is presumably pickeled foods. there is a sword laying in the corner coated in rust and rediculusly dull. there is a ladder upwards and a hole in the corner that seems too small to crawl through.");
+        alert("you have entered a small cramped cellar full of kegs of what is presumably pickeled foods. there is a sword laying in the corner coated in rust and rediculusly dull. there is a ladder upwards and a hole in the corner that seems too small to crawl through. in the kegs there is a " + tempInv + ".");
         PlayerMove();
     }
     else if (room == rClearing) {
-        alert("you find yourself outside the house in a clearing with trees surrounding the edge. the light above you is bright and beaming. there is a small creek running down the edge of the clearing and there are mountains through the trees to the north.");
+        alert("you find yourself outside the house in a clearing with trees surrounding the edge. the light above you is bright and beaming. there is a small creek running down the edge of the clearing and there are mountains through the trees to the north.there is a" + tempInv + " laying in the grass.");
         PlayerMove();
     }
     else{
@@ -151,12 +169,22 @@ function PlayerMove() {
                 alert("you bore your way to the center of the earth and burn in the mantle and die! you dip stick.")
             }
         }
+        //if you read something
         else if (reply == "read"){
             reply = prompt("what would you like to read?")
-            if (reply == "a letter from mom" || reply == "mom's letter" || reply == "moms letter" || reply == "letter"){
+            if (reply == "letter"){
                 for(i = 0; i < 6; i++){
-                    if(inventory[i] == "a letter from mom"){
-                        alert('the letter reads as follows. "I hope you are having a great time out in the woods with your best friend jimmathy von bricklestein! Your sister keeps asking me when you are going to get back. The house is so empty without your cheery presence. I hope you return safely from your hunting trip." the date at the bottom says 1/11/13. the current date is 1/30/19.')
+                    if(inventory[i] == "letter"){
+                        alert('the letter reads as follows. "I hope you are having a great time out in the woods with your best friend jimathy von bricklestein! Your sister keeps asking me when you are going to get back. The house is so empty without your cheery presence. I hope you return safely from your hunting trip." the date at the bottom says 1/11/13. the current date is 1/30/19.')
+                        jimathy = true;
+                        for(i = 6; i < 6; i++) {
+                            if (inventory[i] == "corpse") {
+                                inventory[i] = "jimathy";
+                            }
+                            if (rooms[rHouse][i] == "corpse") {
+                                rooms[rHouse][i] = "jimathy";
+                            }
+                        }
                         break;
                     }
                     else if(i == 6){
@@ -166,6 +194,21 @@ function PlayerMove() {
             }
             else{
                 alert("you can't read that!")
+            }
+        }
+        //if you eat something
+        else if(reply == "eat"){
+            reply = prompt("what do you satisfy your hunger with?")
+            if (reply == "corpse" || reply == "jimathy"){
+                for(i=0; i < 6; i++){
+                    if (inventory[i] == "corpse" || inventory[i] == "jimathy"){
+                        alert("you take a bite of its worm eaten skin. it is cold and slimy skin makes you gag as it slides slowly down your throught. you take bite after bite, each one making you more sick than the last.")
+                        inventory[i] = null;
+                    }
+                }
+            }
+            else{
+                alert ("you can't bring yourself that low.")
             }
         }
         //if it don't work
