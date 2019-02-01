@@ -2,7 +2,7 @@
 //prompt("what is your name?")
 
 //init game variables
-var iHouse = [null, "corpse", null, null, null, "yeet"];
+var iHouse = ["yeet", "corpse", "yeet", "yeet", "yeet", "yeet"];
 var iBasement = ["sword", null, null, null, null, null];
 var iClearing = ["flower", null, null, null, null, null];
 var rHouse = 0;
@@ -60,16 +60,42 @@ function PlayerMove() {
                 if (rooms[room][i] == reply) {
                     for(i = 0; i < 6; i++){
                         if(inventory[i] == null){
-                            alert("there is an empty inventory slot")
                             inventory[i] = rooms[room][k];
                             alert("you took the " + inventory[i]);
                             rooms[room][k] = null;
-                            break;
+                            PlayerMove();
+                        }
+                        else if(i == 5){
+                            alert("your inventory is full. why don't you drop some items?")
                         }
                     }
                 }
-                else if(k == 6){
-                    alert("this item dosen't exist in this room")
+                else if(k == 5){
+                    alert("I don't see any " + reply + "s in here!");
+                }
+            }
+        }
+        else if (reply == "drop" || reply == "throw"){
+            reply = prompt("What do you want to drop?");
+            var i = 0;
+            var k = 0;
+            for (i=0; i < 6; i++) {
+                if (inventory[i] == reply){
+                    k = i;
+                    for (i = 0; i < 6; i++) {
+                        if (rooms[room][i] == null){
+                            alert("you dropped the " + inventory[k]);
+                            rooms[room][i] = inventory[k];
+                            inventory[k] = null;
+                            PlayerMove();
+                        }
+                        else if(i == 5){
+                            alert ("THE FLOOR IS COVERED IN CRAP YOU HOARDER!");
+                        }
+                    }
+                }
+                else if(i == 5){
+                    alert("when did you get that? last I checked you didn't.")
                 }
             }
         }
