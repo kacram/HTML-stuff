@@ -2,21 +2,53 @@
 //prompt("what is your name?")
 
 //init game variables
-var iHouse = [null, null, "corpse", null, null, null];
-var iBasement = ["sword", null, null, null, null, null];
-var iClearing = ["flower", null, null, null, null, null];
-var rHouse = 0;
-var rBasement = 1;
-var rClearing = 2;
-var rooms = [iHouse, iBasement, iClearing];
+{
+    var rat = {
+        hp: 10,
+        armour: 0,
+        damage: 1,
+        weapon: null,
+    }
+} //enemies
+{
+    var iHouse = [null, null, "corpse", null, null, null];
+    var iBasement = ["sword", null, null, null, null, null];
+    var iClearing = ["flower", null, null, null, null, null];
+    var iRiver = ["rock", "moss", null, null, null, null];  
+} //room inventories
+{
+    var dHouse = [null, null, rClearing, null, null, rBasement];
+    var dBasement = [null, null, null, null, rHouse, null];
+    var dClearing = [rHouse, null, rRiver, null, null, null];
+    var dRiver = [rClearing, null, null, null, null, null];
+} //room to room interactions
+{
+    var rHouse = 0;
+    var rBasement = 1;
+    var rClearing = 2;
+    var rRiver = 3;
+} //room numbers
+{
+    var eHouse = null;
+    var eBasement = rat;
+    var eClearing = null;
+    var eRiver = null;
+} //room enemies
+{
+    var House = [rHouse, iHouse, eHouse, dHouse];
+    var Basement = [rBasement, iBasement, eBasement, dBasement];
+    var Clearing = [rClearing, iClearing, eClearing, dClearing];
+    var River = [rRiver, iRiver, eRiver, dRiver];
+} //room arrays
+
+
+var rooms = [House, Basement, Clearing, River];
 var room = rHouse;
 var inventory = ["letter", null, null, null, null, null];
 
 var jimathy = false;
 
 var name = prompt("What! is your name?");
-var quest = prompt("What! is your quest?");
-var favColor = prompt("What! is your favorite color?")
 //begin the game
 Game();
 
@@ -27,18 +59,18 @@ function Game() {
         Room();
     }
 }
-
+//check which room to use and figure out how to do it
 function Room() {
-    //check which room to use and figure out how to do it
-    var tempInv = "";
-    for(i = 0; i < 6; i++){
-        if(rooms[rHouse][i] != null){
-            if(tempInv == ""){
-                tempInv += rooms[rHouse][i];
+    //a temporary inventory variable that lists items in a room
+    var tempInv = " ";
+    for(i = 0; i < inventory.length; i++){
+        if(rooms[room][1][i] != null){
+            if(tempInv == " "){
+                tempInv += rooms[room][1][i];
             }
             else{
                 tempInv += " and a ";
-                tempInv += rooms[room][i];
+                tempInv += rooms[room][1][i];
             }
         }
     }
@@ -59,6 +91,9 @@ function Room() {
         alert("you find yourself outside the house in a clearing with trees surrounding the edge. the light above you is bright and beaming. there is a small creek running down the edge of the clearing and there are mountains through the trees to the north.there is a" + tempInv + " laying in the grass.");
         PlayerMove();
     }
+    else if (room == rRiver) {
+        alert("you find yourself standing next to a small stream. the cool water is trickeling lightly over some mossy stones imbedded in the river bed. there is a" + tempInv + ".")
+    }
     else{
         alert("you are floating in an infinite black obys, have fun!")
     }
@@ -66,21 +101,21 @@ function Room() {
 
 function PlayerMove() {
     while (1==1) {
-    var reply = prompt("what do you do?").toLowerCase();
+        var reply = prompt("what do you do?").toLowerCase();
 
-    //if you steal stuff
-    if (reply == "take") {
+        //if you steal stuff
+        if (reply == "take") {
         reply = prompt("what do you take?").toLowerCase();
         var i = 0;
         var k = 0;
             for (i=0; i < 6; i++) {
                 k = i;
-                if (rooms[room][i] == reply) {
-                    for(i = 0; i < 6; i++){
+                if (rooms[room][1][i] == reply) {
+                    for(i = 0; i < inventory.length; i++){
                         if(inventory[i] == null){
-                            inventory[i] = rooms[room][k];
+                            inventory[i] = rooms[room][1][k];
                             alert("you took the " + inventory[i]);
-                            rooms[room][k] = null;
+                            rooms[room][1][k] = null;
                             PlayerMove();
                         }
                         else if(i == 5){
@@ -93,6 +128,7 @@ function PlayerMove() {
                 }
             }
         }
+        //if the player drops an item
         else if (reply == "drop" || reply == "throw"){
             reply = prompt("What do you want to drop?");
             var i = 0;
@@ -101,9 +137,9 @@ function PlayerMove() {
                 if (inventory[i] == reply){
                     k = i;
                     for (i = 0; i < 6; i++) {
-                        if (rooms[room][i] == null){
+                        if (rooms[room][1][i] == null){
                             alert("you dropped the " + inventory[k]);
-                            rooms[room][i] = inventory[k];
+                            rooms[room][1][i] = inventory[k];
                             inventory[k] = null;
                             PlayerMove();
                         }
@@ -134,15 +170,21 @@ function PlayerMove() {
         }
         //if you go north
         else if (reply == "n" || reply == "north") {
-            if (room == rClearing) {
-                room = rHouse;
-                Room();
+            if(rooms[room][3][0] != null){
+                room = rooms[room][3][0];
+            }
+            else{
+                alert("you can't go that way!")
             }
         }
         //if you go south
         else if (reply == "s" || reply == "south") {
             if (room == rHouse) {
                 room = rClearing;
+                Room();
+            }
+            if (room == rClearing){
+                room = rRiver;
                 Room();
             }
             else{
@@ -181,8 +223,8 @@ function PlayerMove() {
                             if (inventory[i] == "corpse") {
                                 inventory[i] = "jimathy";
                             }
-                            if (rooms[rHouse][i] == "corpse") {
-                                rooms[rHouse][i] = "jimathy";
+                            if (rooms[rHouse][1][i] == "corpse") {
+                                rooms[rHouse][1][i] = "jimathy";
                             }
                         }
                         break;
