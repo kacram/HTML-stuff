@@ -3,6 +3,18 @@
 
 //init game variables
 {
+    var rHouse = 0;
+    var rBasement = 1;
+    var rClearing = 2;
+    var rRiver = 3;
+} //room numbers
+{
+    var dHouse = [null, null, rClearing, null, null, rBasement];
+    var dBasement = [null, null, null, null, rHouse, null];
+    var dClearing = [rHouse, null, rRiver, null, null, null];
+    var dRiver = [rClearing, null, null, null, null, null];
+} //room to room interactions
+{
     var rat = {
         hp: 10,
         armour: 0,
@@ -16,18 +28,6 @@
     var iClearing = ["flower", null, null, null, null, null];
     var iRiver = ["rock", "moss", null, null, null, null];  
 } //room inventories
-{
-    var dHouse = [null, null, rClearing, null, null, rBasement];
-    var dBasement = [null, null, null, null, rHouse, null];
-    var dClearing = [rHouse, null, rRiver, null, null, null];
-    var dRiver = [rClearing, null, null, null, null, null];
-} //room to room interactions
-{
-    var rHouse = 0;
-    var rBasement = 1;
-    var rClearing = 2;
-    var rRiver = 3;
-} //room numbers
 {
     var eHouse = null;
     var eBasement = rat;
@@ -43,6 +43,7 @@
 
 
 var rooms = [House, Basement, Clearing, River];
+
 var room = rHouse;
 var inventory = ["letter", null, null, null, null, null];
 
@@ -63,7 +64,7 @@ function Game() {
 function Room() {
     //a temporary inventory variable that lists items in a room
     var tempInv = " ";
-    for(i = 0; i < inventory.length; i++){
+    for(i = 0; i < 6; i++){
         if(rooms[room][1][i] != null){
             if(tempInv == " "){
                 tempInv += rooms[room][1][i];
@@ -180,7 +181,7 @@ function PlayerMove() {
         }
         //if you go south
         else if (reply == "s" || reply == "south") {
-            if (rooms[room][3][2] != null){
+            if (rooms[0][3][2] != null){
                 room = rooms[room][3][2];
                 Room();
             }
@@ -270,6 +271,15 @@ function PlayerMove() {
             else{
                 alert ("you can't bring yourself that low.")
             }
+        }
+        //if you want to exit
+        else if(reply == "exit" || reply == "die"){
+            alert("well, this is good bye then...")
+            if (reply == "die"){
+                alert("by the way the goal was not to die...")
+                alert("you killed yourself")
+            }
+            yeet;
         }
         //if it don't work
         else{
