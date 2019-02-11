@@ -172,6 +172,7 @@ function PlayerMove() {
         else if (reply == "n" || reply == "north") {
             if(rooms[room][3][0] != null){
                 room = rooms[room][3][0];
+                Room();
             }
             else{
                 alert("you can't go that way!")
@@ -179,36 +180,53 @@ function PlayerMove() {
         }
         //if you go south
         else if (reply == "s" || reply == "south") {
-            if (room == rHouse) {
-                room = rClearing;
-                Room();
-            }
-            if (room == rClearing){
-                room = rRiver;
+            if (rooms[room][3][2] != null){
+                room = rooms[room][3][2];
                 Room();
             }
             else{
-                alert("you can't go that way");
+                alert("you can't go that way!")
+            }
+        }
+        //if you go east
+        else if (reply == "e" || reply == "east") {
+            if (rooms[room][3][1] != null){
+                room = rooms[room][3][1];
+                Room();
+            }
+            else{
+                alert("you can't go that way!")
+            }
+        }
+        //if you go west
+        else if (reply == "w" || reply == "west") {
+            if (rooms[room][3][3] != null) {
+                room = rooms[room][3][3];
+                Room();
+            }
+            else {
+                alert("you can't go that way!");
             }
         }
         //if you go up
         else if (reply == "up" || reply == "u") {
-            if (room == rBasement) {
-                room = rHouse;
+            if (rooms[room][3][4] != null) {
+                room = rooms[room][3][4];
                 Room();
             }
-            else{
-                alert("you can't go that way")
+            else {
+                alert("you can't fly man!")
             }
         }
         //if you go down
         else if (reply == "down" || reply == "d") {
-            if (room == rHouse) {
-                room = rBasement;
+            alert(rooms[room][3][5])
+            if (rooms[room][3][5] != null){
+                room = rooms[room][3][5];
                 Room();
             }
             else{
-                alert("you bore your way to the center of the earth and burn in the mantle and die! you dip stick.")
+                alert ("you bore your way to the center of the earth and burn up in the mantle! GREAT JOB, you died, you dip stick.")
             }
         }
         //if you read something
