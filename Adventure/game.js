@@ -16,9 +16,11 @@
 } //room to room interactions
 {
     var rat = {
+        name: "rat",
         hp: 10,
         armour: 0,
         damage: 1,
+        speed: 2,
         weapon: null,
     }
 } //enemies
@@ -53,7 +55,7 @@ var name = prompt("What! is your name?");
 //begin the game
 Game();
 
-
+//the main game shell
 function Game() {
     while (1 == 1) {
         //begin the room
@@ -63,6 +65,10 @@ function Game() {
 //check which room to use and figure out how to do it
 function Room() {
     //a temporary inventory variable that lists items in a room
+    if (rooms[room][2] != null){
+        Combat();
+    }
+    
     var tempInv = " ";
     for(i = 0; i < 6; i++){
         if(rooms[room][1][i] != null){
@@ -99,14 +105,13 @@ function Room() {
         alert("you are floating in an infinite black obys, have fun!")
     }
 }
-
+//check player's input and decide what to do
 function PlayerMove() {
     while (1==1) {
         var reply = prompt("what do you do?").toLowerCase();
-
         //if you steal stuff
         if (reply == "take") {
-        reply = prompt("what do you take?").toLowerCase();
+        let reply = prompt("what do you take?").toLowerCase();
         var i = 0;
         var k = 0;
             for (i=0; i < 6; i++) {
@@ -131,7 +136,7 @@ function PlayerMove() {
         }
         //if the player drops an item
         else if (reply == "drop" || reply == "throw"){
-            reply = prompt("What do you want to drop?");
+            let reply = prompt("What do you want to drop?");
             var i = 0;
             var k = 0;
             for (i=0; i < 6; i++) {
@@ -232,7 +237,7 @@ function PlayerMove() {
         }
         //if you read something
         else if (reply == "read"){
-            reply = prompt("what would you like to read?")
+            let reply = prompt("what would you like to read?")
             if (reply == "letter"){
                 for(i = 0; i < 6; i++){
                     if(inventory[i] == "letter"){
@@ -259,7 +264,7 @@ function PlayerMove() {
         }
         //if you eat something
         else if(reply == "eat"){
-            reply = prompt("what do you satisfy your hunger with?")
+            let reply = prompt("what do you satisfy your hunger with?")
             if (reply == "corpse" || reply == "jimathy"){
                 for(i=0; i < 6; i++){
                     if (inventory[i] == "corpse" || inventory[i] == "jimathy"){
@@ -287,6 +292,20 @@ function PlayerMove() {
         }
     }
 }
-
+//combat is held here
+function Combat() {
+    var enemy = rooms[room][2];
+    alert("an enemy aproaches. it apears to be a" + enemy.name);
+    while(1==1){
+        var reply = prompt("What do you do about the " + enemy.name + "standing in front of you?")
+        
+        if (reply == "attack"){
+            let reply = prompt("what do you attack with?");
+            if (reply == "" || reply == "punch" || reply == "fist"){
+                alert("you attack the " + enemy.name + " with your fists.")
+            }
+        }
+    }
+}
 
 
