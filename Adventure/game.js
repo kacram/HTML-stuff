@@ -3,6 +3,45 @@
 
 //init game variables
 {
+    {
+        var cap = {
+            name: "cap",
+            type: "helm",
+            defence: 1,
+        }
+    }//head gear
+    {
+       var jacket = {
+           name: "jacket",
+           type: "chestPiece",
+           defence: 2,
+       } 
+    }//chest pieces
+    {
+        
+    }//gauntlets
+    {
+        
+    }//leggings
+    {
+        
+    }//boots
+    {
+        var rustySword = {
+            name: "rusty sword",
+            type: "weapon",
+            damage: 3,
+        }
+    }//weapons
+    {
+        var momsNote = {
+            name: "mom's letter",
+            type: "readable",
+            note: "hey kiddo, I hope you are having a great time out at the lodge. We miss you back home and hope you return soon. Your brother told me to say hi. Have fun out there."
+        }
+    }//readables
+}//items
+{
     var rHouse = 0;
     var rBasement = 1;
     var rClearing = 2;
@@ -20,15 +59,14 @@
         hp: 10,
         armour: 0,
         damage: 1,
-        speed: 2,
-        weapon: null,
+        weapon: "teeth",
     }
 } //enemies
 {
-    var iHouse = [null, null, "corpse", null, null, null];
-    var iBasement = ["sword", null, null, null, null, null];
-    var iClearing = ["flower", null, null, null, null, null];
-    var iRiver = ["rock", "moss", null, null, null, null];  
+    var iHouse = [null, null, null, null, null, null];
+    var iBasement = [null, null, null, null, null, null];
+    var iClearing = [null, null, null, null, null, null];
+    var iRiver = [null, null, null, null, null, null];
 } //room inventories
 {
     var eHouse = null;
@@ -42,12 +80,27 @@
     var Clearing = [rClearing, iClearing, eClearing, dClearing];
     var River = [rRiver, iRiver, eRiver, dRiver];
 } //room arrays
-
+var equipment = {
+    helm: null,
+    chestPiece: null,
+    gauntlets: null,
+    leggings: null,
+    boots: null,
+    weapon: null,
+}
+var stats = {
+    vitality: 10,
+    strength: 3,
+    dextarity: 2,
+    charisma: 3,
+    fortitude: 2,
+    intellegence: 3,
+}
 
 var rooms = [House, Basement, Clearing, River];
 
 var room = rHouse;
-var inventory = ["letter", null, null, null, null, null];
+var inventory = [cap, jacket, null, null, null, null];
 
 var jimathy = false;
 
@@ -105,22 +158,23 @@ function Room() {
         alert("you are floating in an infinite black obys, have fun!")
     }
 }
-//check player's input and decide what to do
+//take the player's input and figure out what to do
 function PlayerMove() {
     while (1==1) {
         var reply = prompt("what do you do?").toLowerCase();
         //if you steal stuff
         if (reply == "take") {
-        let reply = prompt("what do you take?").toLowerCase();
-        var i = 0;
-        var k = 0;
+            let reply = prompt("what do you take?").toLowerCase();
+            var i = 0;
+            var k = 0;
             for (i=0; i < 6; i++) {
                 k = i;
-                if (rooms[room][1][i] == reply) {
+                if (rooms[room][1][i] != null) {
+                    if (rooms[room][1][i].name == reply)
                     for(i = 0; i < inventory.length; i++){
                         if(inventory[i] == null){
                             inventory[i] = rooms[room][1][k];
-                            alert("you took the " + inventory[i]);
+                            alert("you took the " + inventory[i].name);
                             rooms[room][1][k] = null;
                             PlayerMove();
                         }
@@ -140,22 +194,24 @@ function PlayerMove() {
             var i = 0;
             var k = 0;
             for (i=0; i < 6; i++) {
-                if (inventory[i] == reply){
-                    k = i;
-                    for (i = 0; i < 6; i++) {
-                        if (rooms[room][1][i] == null){
-                            alert("you dropped the " + inventory[k]);
-                            rooms[room][1][i] = inventory[k];
-                            inventory[k] = null;
-                            PlayerMove();
-                        }
-                        else if(i == 5){
-                            alert ("THE FLOOR IS COVERED IN CRAP YOU HOARDER!");
+                if (inventory[i] != null){
+                    if (inventory[i].name == reply){
+                        k = i;
+                        for (i = 0; i < 6; i++) {
+                            if (rooms[room][1][i] == null){
+                                alert("you dropped the " + inventory[k].name);
+                                rooms[room][1][i] = inventory[k];
+                                inventory[k] = null;
+                                PlayerMove();
+                            }
+                            else if(i == 5){
+                                alert ("THE FLOOR IS COVERED IN CRAP YOU HOARDER!");
+                            }
                         }
                     }
-                }
-                else if(i == 5){
-                    alert("when did you get that? last I checked you didn't.")
+                    else if(i == 5){
+                        alert("when did you get that? last I checked you didn't.")
+                    }
                 }
             }
         }
@@ -164,7 +220,7 @@ function PlayerMove() {
             var tempInv = "inventory = ";
             for (i = 0; i < 6; i++){
                 if (inventory[i] != null) {
-                    tempInv += inventory[i];
+                    tempInv += inventory[i].name;
                     tempInv += "  ";
                 }
             }
@@ -236,8 +292,8 @@ function PlayerMove() {
             }
         }
         //if you read something
-        else if (reply == "read"){
-            let reply = prompt("what would you like to read?")
+        else if (reply == "read") {
+            reply = prompt("what would you like to read?")
             if (reply == "letter"){
                 for(i = 0; i < 6; i++){
                     if(inventory[i] == "letter"){
@@ -263,8 +319,8 @@ function PlayerMove() {
             }
         }
         //if you eat something
-        else if(reply == "eat"){
-            let reply = prompt("what do you satisfy your hunger with?")
+        else if(reply == "eat") {
+            reply = prompt("what do you satisfy your hunger with?")
             if (reply == "corpse" || reply == "jimathy"){
                 for(i=0; i < 6; i++){
                     if (inventory[i] == "corpse" || inventory[i] == "jimathy"){
@@ -278,7 +334,7 @@ function PlayerMove() {
             }
         }
         //if you want to exit
-        else if(reply == "exit" || reply == "die"){
+        else if(reply == "exit" || reply == "die") {
             alert("well, this is good bye then...")
             if (reply == "die"){
                 alert("by the way the goal was not to die...")
@@ -286,26 +342,65 @@ function PlayerMove() {
             }
             yeet;
         }
+        //if you want to equip something
+        else if(reply == "equip") {
+            let reply = prompt("what do you want to equip?");
+            for (i = 0; i <= inventory.length; i++){
+                if (inventory[i] != null){
+                    if (inventory[i].name = prompt){
+                        if (inventory[i].type == "helm"){
+                            let yeet = inventory[i];
+                            inventory[i] = equipment.helm;
+                            equipment.helm = yeet;
+                            alert("You equiped the " + yeet.name + ".");
+                        }
+                        else if (inventory[i].type == "chestPlate") {
+                            let yeet = inventory[i];
+                            inventory[i] = equipment.chestPiece;
+                            equipment.chestPiece = yeet;
+                            alert("You equiped the " + yeet.name + ".");
+                        }
+                        else if (inventory[i].type == "gauntlet") {
+                            let yeet = inventory[i];
+                            inventory[i] = equipment.gauntlets;
+                            equipment.helm = yeet;
+                            alert("You equiped the " + yeet.name + ".");
+                        }
+                        else if (inventory[i].type == "leggings") {
+                            let yeet = inventory[i];
+                            inventory[i] = equipment.leggings;
+                            equipment.helm = yeet;
+                            alert("You equiped the " + yeet.name + ".");
+                        }
+                        else if (inventory[i].type == "boots") {
+                            let yeet = inventory[i];
+                            inventory[i] = equipment.boots;
+                            equipment.helm = yeet;
+                            alert("You equiped the " + yeet.name + ".");
+                        }
+                        else if (inventory[i].type == "weapon") {
+                            let yeet = inventory[i];
+                            inventory[i] = equipment.weapon;
+                            equipment.helm = yeet;
+                            alert("You equiped the " + yeet.name + ".");
+                        }
+                        else {
+                            alert("did you just try to wear a " + reply + "?");
+                        }
+                    }
+                }
+            }
+        }
         //if it don't work
-        else{
+        else {
             alert("i don't understand");
         }
     }
 }
-//combat is held here
+//enemy encounters and the following combat
 function Combat() {
     var enemy = rooms[room][2];
-    alert("an enemy aproaches. it apears to be a" + enemy.name);
-    while(1==1){
-        var reply = prompt("What do you do about the " + enemy.name + "standing in front of you?")
-        
-        if (reply == "attack"){
-            let reply = prompt("what do you attack with?");
-            if (reply == "" || reply == "punch" || reply == "fist"){
-                alert("you attack the " + enemy.name + " with your fists.")
-            }
-        }
-    }
+    alert()
 }
 
 
