@@ -1,6 +1,6 @@
 //alert("yo " + yo)
 //prompt("what is your name?")
-
+var prevRoom
 //init game variables
 {
     {
@@ -58,12 +58,13 @@
         name: "rat",
         hp: 10,
         armour: 0,
-        damage: 1,
+        damage: 3,
         weapon: "teeth",
+        fortitude: 4,
     }
 } //enemies
 {
-    var iHouse = [null, null, null, null, null, null];
+    var iHouse = [jacket, momsNote, null, null, null, null];
     var iBasement = [null, null, null, null, null, null];
     var iClearing = [null, null, null, null, null, null];
     var iRiver = [null, null, null, null, null, null];
@@ -105,14 +106,19 @@ var stats = {
     fortitude: 2,
     intellegence: 3,
 }
+
 //declares an aray where one can find information about the rooms
 var rooms = [House, Basement, Clearing, River];
+
 //sets your starting room
 var room = rHouse;
+
 //declares the player inventory
-var inventory = [cap, jacket, null, null, null, null];
+var inventory = [cap, null, null, null, null, null];
+
 //get the player's name
 var name = prompt("What! is your name?");
+
 //begin the game
 Game();
 
@@ -126,15 +132,18 @@ function Game() {
 }
 //check which room to use and figure out how to do it
 function Room() {
+    if (rooms[room][2] != null){
+        Combat();
+    }
     //a temporary inventory variable that lists items in a room
     var tempInv = " ";
-    for(i = 0; i < 6; i++){
+    for(i = 0; i < rooms[room][1].length; i++){
         if(rooms[room][1][i] != null){
             if(tempInv == " "){
                 tempInv += rooms[room][1][i].name;
             }
             else{
-                tempInv += " and a ";
+                tempInv += ", a ";
                 tempInv += rooms[room][1][i].name;
             }
         }
@@ -218,17 +227,71 @@ function PlayerMove() {
         //if player checks inventory
         else if (reply == "i" || reply == "inventory"){
             var tempInv = "inventory = ";
-            for (i = 0; i < 6; i++){
+            for (i = 0; i < inventory.length - 1; i++){
                 if (inventory[i] != null) {
-                    tempInv += inventory[i].name;
-                    tempInv += "  ";
+                    if (tempInv === "inventory = "){
+                        tempInv += inventory[i].name;
+                    }
+                    else {
+                        tempInv += ", ";
+                        tempInv += inventory[i].name;
+                    }
                 }
             }
+            {
+                if (equipment.helm != null){
+                    tempInv += "\nhelmet: " + equipment.helm.name;
+                }
+                else{
+                    tempInv += "\nno helmet equiped";
+                }
+            }//helmet
+            {
+                if (equipment.chestPiece != null){
+                    tempInv += "\nchest piece: " + equipment.chestPiece.name;
+                }
+                else{
+                    tempInv += "\nno chest piece equiped";
+                }
+            }//chest piece
+            {
+                if (equipment.gauntlets != null) {
+                    tempInv += "\ngauntlets: " + equipment.gauntlets.name;
+                }
+                else{
+                    tempInv += "\nno gauntlets equiped";
+                } 
+            }//gauntlets
+            {
+                if (equipment.gauntlets != null){
+                    tempInv += "\nleggings: " + equipment.leggings.name;
+                }
+                else {
+                    tempInv += "\nno leggings equiped";
+                }
+            }//leggings
+            {
+                if (equipment.boots != null){
+                    tempInv += "\nboots: " + equipment.boots.name;
+                }
+                else {
+                    tempInv += "\nno boots equiped";
+                }
+            }//boots
+            {
+                if(equipment.weapon != null){
+                    tempInv += "\nweapon: " + equipment.weapon.name;
+                }
+                else{
+                    tempInv += "\nno weapon equiped";
+                }
+            }//weapon
+            //tell the player what they have
             alert(tempInv)
         }
         //if you look around
         else if (reply == "look" || reply == "l") {
-            alert(rooms[room][4] + " in the room there is a " + tempInv);
+            Room();
         }
         //if you go north
         else if (reply == "n" || reply == "north") {
@@ -296,8 +359,9 @@ function PlayerMove() {
             for (i = 0; i < inventory.length; i++){
                 if (inventory[i].name == reply){
                     alert(inventory[i].note);
+                    break;
                 }
-                else {
+                else if (i == inventory.length - 1) {
                     alert("you can't read that!");
                 }   
             }
@@ -317,51 +381,126 @@ function PlayerMove() {
             reply = prompt("what do you want to equip?");
             for (i = 0; i <= inventory.length; i++){
                 if (inventory[i] != null){
-                    if (inventory[i].name = prompt){
+                    if (inventory[i].name == reply){
                         if (inventory[i].type == "helm"){
                             yeet = inventory[i];
                             inventory[i] = equipment.helm;
                             equipment.helm = yeet;
                             alert("You equiped the " + yeet.name + ".");
+                            break;
                         }
-                        else if (inventory[i].type == "chestPlate") {
+                        else if (inventory[i].type == "chestPiece") {
                             yeet = inventory[i];
                             inventory[i] = equipment.chestPiece;
                             equipment.chestPiece = yeet;
                             alert("You equiped the " + yeet.name + ".");
+                            break;
                         }
                         else if (inventory[i].type == "gauntlet") {
                             yeet = inventory[i];
                             inventory[i] = equipment.gauntlets;
                             equipment.helm = yeet;
                             alert("You equiped the " + yeet.name + ".");
+                            break;
                         }
                         else if (inventory[i].type == "leggings") {
                             yeet = inventory[i];
                             inventory[i] = equipment.leggings;
                             equipment.helm = yeet;
                             alert("You equiped the " + yeet.name + ".");
+                            break;
                         }
                         else if (inventory[i].type == "boots") {
                             yeet = inventory[i];
                             inventory[i] = equipment.boots;
                             equipment.helm = yeet;
                             alert("You equiped the " + yeet.name + ".");
+                            break;
                         }
                         else if (inventory[i].type == "weapon") {
                             yeet = inventory[i];
                             inventory[i] = equipment.weapon;
                             equipment.helm = yeet;
                             alert("You equiped the " + yeet.name + ".");
+                            break;
                         }
-                        else {
+                        else if (i == inventory.length - 1) {
                             alert("did you just try to wear a " + reply + "?");
                         }
                     }
                 }
             }
         }
-        //if it don't work
+        //if you want to take something off
+        else if(reply == "unequip" || reply == "dequip") {
+            var dequipSlot = null;
+            var dequip = null;
+            for (i = 0; i < inventory.length - 1; i++){
+                if (inventory[i] == null){
+                    dequipSlot = i;
+                    break;
+                }
+            }
+            if (dequipSlot != null){
+                reply = prompt("what do you dequip?");
+                if (reply == "helm" || reply == "helmet"){
+                    dequip = equipment.helm;
+                    equipment.helm = null;
+}
+                else if (reply == "chest piece" || reply == "chest plate"){
+                    dequip = equipment.chestPiece;
+                    equipment.chestPiece = null;
+}
+                else if (reply == "gauntlets" || reply == "gloves"){
+                    dequip = equipment.chestPiece;
+                    equipment.chestPiece = null;
+}
+                else if (reply == "leggings" || reply == "pants"){
+                    dequip = equipment.leggings;
+                    equipment.leggings = null;
+}
+                else if (reply == "boots" || reply == "shoes"){
+                    dequip = equipment.boots;
+                    equipment.boots = null;
+}
+                else if (reply == "weapon" || reply == "sword" || reply == "axe" || reply == "hammer" || reply == "ax"){
+                    dequip = equipment.weapon;
+                    equipment.weapon = null;
+}
+                else if (equipment.helm != null && equipment.helm.name == reply){
+                    dequip = equipment.helm;
+                    equipment.helm = null;
+}
+                else if (equipment.chestPiece.name == reply){
+                    dequip = equipment.chestPiece;
+                    equipment.chestPiece = null;
+                }
+                else if (equipment.gauntlets != null && equipment.gauntlets.name == reply) {
+                    dequip = equipment.gauntlets;
+                    equipment.gauntlets = null;
+}
+                else if (equipment.leggings != null && equipment.leggings.name == reply) {
+                    dequip = equipment.leggings;
+                    equipment.leggings = null;
+}
+                else if (equipment.boots != null && equipment.boots.name == reply) {
+                    dequip = equipment.boots;
+                    equipment.boots = null;
+}
+                else if (equipment.weapon != null && equipment.weapon.name == reply){
+                    dequip = equipment.weapon;
+                    equipment.weapon = null;
+                }
+                if (dequip != null) {
+                    inventory[dequipSlot] = dequip;
+                    alert("you dequiped the " + dequip.name)
+                    PlayerMove();
+                }
+            }
+            else{
+                alert("either you typed something wrong, you have a full inventory, or I goofed.")
+            }
+        }
         else {
             alert("i don't understand");
         }
@@ -369,8 +508,90 @@ function PlayerMove() {
 }
 //enemy encounters and the following combat
 function Combat() {
+    var atkPwr = 0;
+    var defPwr = 0;
+    var fistAtk = 0;
+    var enemyAtk = 0;
+    var defence = 0;
     var enemy = rooms[room][2];
-    alert("there is a " + enemy.name);
+    alert("careful, there is a " + enemy.name + " prone to strike!");
+    alert("the " + enemy.name + " has " + enemy.hp + " hp");
+    {
+        if(equipment.helm != null){
+            defence += equipment.helm.defence;
+        }
+        if (equipment.chestPiece != null){
+            defence += equipment.chestPiece.defence;
+        }
+        if (equipment.gauntlets != null){
+            defence += equipment.gauntlets.defence;
+        }
+        if (equipment.leggings != null) {
+            defence += equipment.leggings.defence;
+        }
+        if (equipment.boots != null) {
+            defence += equipment.boots.defence;
+        }
+    }//calculate defence
+    while (1==1){
+        reply = prompt("what do you do?")
+        {
+            if (reply == "attack"){
+                if (equipment.weapon != null){
+                atkPwr = equipment.weapon.damage * stats.strength * 0.25;
+                atkPwr += Randy(atkPwr/5,-atkPwr/5);
+                enemy.hp -= atkPwr - enemy.fortitude;
+                alert("you attacked the " + enemy.name + " with your " + equipment.weapon.name + " for " + (atkPwr - enemy.fortitude) + "!");
+                alert("the " + enemy.name + " has " + enemy.hp + " hp");
+            }
+                else{
+                fistAtk = Randy(2,0);
+                enemy.hp -= fistAtk;
+                alert("you punched the " + enemy.name + " for " + fistAtk + "!")
+                alert("the " + enemy.name + " has " + enemy.hp + " hp");
+            }
+            }
+            if (reply == "block" || reply == "defend"){
+                if (equipment.weapon != null){
+                    defPwr = stats.fortitude + defence + equipment.weapon.damage;
+                }
+                else {
+                    defPwr = stats.fortitude + defence + Randy(2,0);
+                }
+}
+            else {
+                defPwr = stats.fortitude + defence;
+            }
+            if (reply == "flee" || reply == "run") {
+                stats.hp -= 3;
+                alert("you escaped ungracefully taking 3 damage");
+                room = prevRoom;
+                Room();
+            }
+        }//player's turn
+        if (enemy.hp <= 0){
+            alert("the enemy bit the dust");
+            break;
+        }
+        {
+            enemyAtk = enemy.damage + Randy(enemy.damage/3,enemy.damage/3);
+            enemyAtk -= defPwr;
+            if (enemyAtk <= 0){
+                enemyAtk = 0;
+            }
+            stats.hp -= enemyAtk;
+            alert("you were attacked for " + enemyAtk + "damage! \nyou now have " + stats.hp + " hp.")
+        }//enemy's turn
+        if (stats.hp <= 0){
+            alert("you have been defeated in combat!");
+            page.close;
+        }
+    }
+    rooms[room][2] = null;
+    Room();
 }
 
+function Randy(max,min){
+    return Math.round(Math.random() * (max - min) ) + min;
+}
 
