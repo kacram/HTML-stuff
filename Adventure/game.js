@@ -21,7 +21,11 @@ var prevRoom
         
     }//gauntlets
     {
-        
+        var pants = {
+            name: "pants",
+            type: "leggings",
+            defence: 1,
+        }
     }//leggings
     {
         
@@ -56,11 +60,11 @@ var prevRoom
 {
     var rat = {
         name: "rat",
-        hp: 10,
+        hp: 6,
         armour: 0,
-        damage: 3,
+        damage: 2,
         weapon: "teeth",
-        fortitude: 4,
+        fortitude: 2,
     }
 } //enemies
 {
@@ -100,6 +104,7 @@ var equipment = {
 //where the game tracks your stats
 var stats = {
     vitality: 10,
+    hp: 10,
     strength: 3,
     dextarity: 2,
     charisma: 3,
@@ -114,7 +119,7 @@ var rooms = [House, Basement, Clearing, River];
 var room = rHouse;
 
 //declares the player inventory
-var inventory = [cap, null, null, null, null, null];
+var inventory = [pants, null, null, null, null, null];
 
 //get the player's name
 var name = prompt("What! is your name?");
@@ -399,28 +404,28 @@ function PlayerMove() {
                         else if (inventory[i].type == "gauntlet") {
                             yeet = inventory[i];
                             inventory[i] = equipment.gauntlets;
-                            equipment.helm = yeet;
+                            equipment.gauntlets = yeet;
                             alert("You equiped the " + yeet.name + ".");
                             break;
                         }
                         else if (inventory[i].type == "leggings") {
                             yeet = inventory[i];
                             inventory[i] = equipment.leggings;
-                            equipment.helm = yeet;
+                            equipment.leggings = yeet;
                             alert("You equiped the " + yeet.name + ".");
                             break;
                         }
                         else if (inventory[i].type == "boots") {
                             yeet = inventory[i];
                             inventory[i] = equipment.boots;
-                            equipment.helm = yeet;
+                            equipment.boots = yeet;
                             alert("You equiped the " + yeet.name + ".");
                             break;
                         }
                         else if (inventory[i].type == "weapon") {
                             yeet = inventory[i];
                             inventory[i] = equipment.weapon;
-                            equipment.helm = yeet;
+                            equipment.weapon = yeet;
                             alert("You equiped the " + yeet.name + ".");
                             break;
                         }
@@ -501,6 +506,7 @@ function PlayerMove() {
                 alert("either you typed something wrong, you have a full inventory, or I goofed.")
             }
         }
+        //if it don't work
         else {
             alert("i don't understand");
         }
@@ -509,7 +515,6 @@ function PlayerMove() {
 //enemy encounters and the following combat
 function Combat() {
     var atkPwr = 0;
-    var defPwr = 0;
     var fistAtk = 0;
     var enemyAtk = 0;
     var defence = 0;
@@ -535,7 +540,8 @@ function Combat() {
     }//calculate defence
     while (1==1){
         reply = prompt("what do you do?")
-        {
+        function PlayerTurn(){
+            var defPwr = 0;
             if (reply == "attack"){
                 if (equipment.weapon != null){
                 atkPwr = equipment.weapon.damage * stats.strength * 0.25;
@@ -551,23 +557,25 @@ function Combat() {
                 alert("the " + enemy.name + " has " + enemy.hp + " hp");
             }
             }
-            if (reply == "block" || reply == "defend"){
+            else if (reply == "block" || reply == "defend"){
                 if (equipment.weapon != null){
                     defPwr = stats.fortitude + defence + equipment.weapon.damage;
                 }
                 else {
                     defPwr = stats.fortitude + defence + Randy(2,0);
                 }
-}
-            else {
-                defPwr = stats.fortitude + defence;
             }
-            if (reply == "flee" || reply == "run") {
+            else if (reply == "flee" || reply == "run") {
                 stats.hp -= 3;
                 alert("you escaped ungracefully taking 3 damage");
                 room = prevRoom;
                 Room();
             }
+            
+            if (defPwr == 0){
+                defPwr = stats.fortitude + defence;
+            }
+            
         }//player's turn
         if (enemy.hp <= 0){
             alert("the enemy bit the dust");
