@@ -1,6 +1,9 @@
 //alert("yo " + yo)
 //prompt("what is your name?")
-var prevRoom
+var prevRoom = 0;
+//get the player's name
+var name = prompt("What! is your name?");
+
 //init game variables
 {
     {
@@ -41,7 +44,7 @@ var prevRoom
         var momsNote = {
             name: "mom's letter",
             type: "readable",
-            note: "hey kiddo, I hope you are having a great time out at the lodge. We miss you back home and hope you return soon. Your brother told me to say hi. Have fun out there."
+            note: "hey " + name + ", I hope you are having a great time out at the lodge. We miss you back home and hope you return soon. Your brother told me to say hi. Have fun out there."
         }
     }//readables
 }//items
@@ -80,11 +83,18 @@ var prevRoom
     var eRiver = null;
 } //room enemies
 {
-    //what the game tells you when you look in a room
-    var lHouse = "you find yourself in a small cottage. you have been living here for the past 2 months while working for a lumber-jack in the area near here. it is a one room house with little fronananture.";
-    var lBasement = "this is your basement. you keep several pickeled goods on the shelves just in case of emergency. in the corner there are several rusty swords that you used to use for practicing swordplay.";
-    var lClearing = "you are in a small clearing with a densely forested area on most sides. your cottage lies to the north of here while a small spring lies to the south. there is a mountain off to the distance to the east and a village to the west.";
-    var lRiver = "there is a little brook trickeling between the trees that caries down a small slope. the stream's origin is towards the east and it carries on towards the south. there is nothing but dense forest to the west. the clearing is to the north.";
+    {
+        var lHouse = "you find yourself in a small cottage. you have been living here for the past 2 months while working for a lumber-jack in the area near here. it is a one room house with little furniture. there is a rug on the floor that has been obviously kicked aside, underneath there is a trap door.";
+    }//house
+    {
+        var lBasement = "this is your basement. you keep several pickeled goods on the shelves just in case of emergency. in the corner there are several rusty swords that you used to use for practicing swordplay.";
+    }//basement
+    {
+        var lClearing = "you are in a small clearing with a densely forested area on most sides. your cottage lies to the north of here while a small spring lies to the south. there is a mountain off to the distance to the east and a village to the west.";
+    }//clearing
+    {
+        var lRiver = "there is a little brook trickeling between the trees that caries down a small slope. the stream's origin is towards the east and it carries on towards the south. there is nothing but dense forest to the west. the clearing is to the north.";
+    }//river
 }//room look scripts
 {
     var House = [rHouse, iHouse, eHouse, dHouse, lHouse];
@@ -120,9 +130,6 @@ var room = rHouse;
 
 //declares the player inventory
 var inventory = [pants, null, null, null, null, null];
-
-//get the player's name
-var name = prompt("What! is your name?");
 
 //begin the game
 Game();
@@ -268,7 +275,7 @@ function PlayerMove() {
                 } 
             }//gauntlets
             {
-                if (equipment.gauntlets != null){
+                if (equipment.leggings != null){
                     tempInv += "\nleggings: " + equipment.leggings.name;
                 }
                 else {
@@ -301,6 +308,7 @@ function PlayerMove() {
         //if you go north
         else if (reply == "n" || reply == "north") {
             if(rooms[room][3][0] != null){
+                prevRoom = room;
                 room = rooms[room][3][0];
                 Room();
             }
@@ -310,27 +318,30 @@ function PlayerMove() {
         }
         //if you go south
         else if (reply == "s" || reply == "south") {
-            if (rooms[0][3][2] != null){
+            if (rooms[room][3][2] != null){
+                prevRoom = room;
                 room = rooms[room][3][2];
                 Room();
             }
             else{
-                alert("you can't go that way!")
+                alert("you can't go that way!");
             }
         }
         //if you go east
         else if (reply == "e" || reply == "east") {
             if (rooms[room][3][1] != null){
+                prevRoom = room;
                 room = rooms[room][3][1];
                 Room();
             }
             else{
-                alert("you can't go that way!")
+                alert("you can't go that way!");
             }
         }
         //if you go west
         else if (reply == "w" || reply == "west") {
             if (rooms[room][3][3] != null) {
+                prevRoom = room;
                 room = rooms[room][3][3];
                 Room();
             }
@@ -341,6 +352,7 @@ function PlayerMove() {
         //if you go up
         else if (reply == "up" || reply == "u") {
             if (rooms[room][3][4] != null) {
+                prevRoom = room;
                 room = rooms[room][3][4];
                 Room();
             }
@@ -351,6 +363,7 @@ function PlayerMove() {
         //if you go down
         else if (reply == "down" || reply == "d") {
             if (rooms[room][3][5] != null){
+                prevRoom = room;
                 room = rooms[room][3][5];
                 Room();
             }
@@ -362,9 +375,11 @@ function PlayerMove() {
         else if (reply == "read") {
             reply = prompt("what would you like to read?")
             for (i = 0; i < inventory.length; i++){
-                if (inventory[i].name == reply){
-                    alert(inventory[i].note);
-                    break;
+                if (inventory.i != null){
+                    if (inventory[i].name == reply){
+                        alert(inventory[i].note);
+                        break;
+                    }
                 }
                 else if (i == inventory.length - 1) {
                     alert("you can't read that!");
