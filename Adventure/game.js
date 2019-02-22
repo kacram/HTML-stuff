@@ -37,7 +37,12 @@ var name = prompt("What! is your name?");
         var rustySword = {
             name: "rusty sword",
             type: "weapon",
-            damage: 3,
+            damage: 6,
+        }
+        var branch = {
+            name: "branch",
+            type: "weapon",
+            damage: 6,
         }
     }//weapons
     {
@@ -64,10 +69,18 @@ var name = prompt("What! is your name?");
     var rat = {
         name: "rat",
         hp: 6,
-        armour: 0,
         damage: 2,
         weapon: "teeth",
+        fortitude: 0,
+        drop: null,
+    }
+    var oldEnt = {
+        name: "old ent",
+        hp: 10,
+        damage: 3,
+        weapon: "limbs",
         fortitude: 2,
+        drop: branch,
     }
 } //enemies
 {
@@ -80,7 +93,7 @@ var name = prompt("What! is your name?");
     var eHouse = null;
     var eBasement = rat;
     var eClearing = null;
-    var eRiver = null;
+    var eRiver = oldEnt;
 } //room enemies
 {
     {
@@ -554,48 +567,72 @@ function Combat() {
         }
     }//calculate defence
     while (1==1){
-        reply = prompt("what do you do?")
         function PlayerTurn(){
-            var defPwr = 0;
-            if (reply == "attack"){
-                if (equipment.weapon != null){
-                atkPwr = equipment.weapon.damage * stats.strength * 0.25;
-                atkPwr += Randy(atkPwr/5,-atkPwr/5);
-                enemy.hp -= atkPwr - enemy.fortitude;
-                alert("you attacked the " + enemy.name + " with your " + equipment.weapon.name + " for " + (atkPwr - enemy.fortitude) + "!");
-                alert("the " + enemy.name + " has " + enemy.hp + " hp");
-            }
+            while (1==1){
+                reply = prompt("what do you do?");
+                if (reply == "attack"){
+                    if (equipment.weapon != null){
+                        atkPwr = equipment.weapon.damage * stats.strength * 0.25;
+                        atkPwr += Randy(atkPwr/5,-atkPwr/5);
+                        atkPwr -= enemy.fortitude;
+                        atkPwr = Math.round(atkPwr);
+                    if (atkPwr <= 0){
+                        atkPwr = 0;
+                    }
+                    enemy.hp -= atkPwr;
+                    alert("you attacked the " + enemy.name + " with your " + equipment.weapon.name + " for " + atkPwr + "!");
+                    alert("the " + enemy.name + " has " + enemy.hp + " hp");
+                    break;
+                }
+                    else{
+                    fistAtk = Randy(2,0);
+                    enemy.hp -= fistAtk;
+                    alert("you punched the " + enemy.name + " for " + fistAtk + "!")
+                    alert("the " + enemy.name + " has " + enemy.hp + " hp");
+                }
+}
+                else if (reply == "block" || reply == "defend"){
+                    if (equipment.weapon != null){
+                        defPwr = stats.fortitude + defence + equipment.weapon.damage;
+                    }
+                    else {
+                        defPwr = stats.fortitude + defence + Randy(2,0);
+                    }
+                    break;
+                }
+                else if (reply == "flee" || reply == "run") {
+                    stats.hp -= 3;
+                    alert("you escaped ungracefully taking 3 damage");
+                    room = prevRoom;
+                    Room();
+                }
                 else{
-                fistAtk = Randy(2,0);
-                enemy.hp -= fistAtk;
-                alert("you punched the " + enemy.name + " for " + fistAtk + "!")
-                alert("the " + enemy.name + " has " + enemy.hp + " hp");
-            }
-            }
-            else if (reply == "block" || reply == "defend"){
-                if (equipment.weapon != null){
-                    defPwr = stats.fortitude + defence + equipment.weapon.damage;
-                }
-                else {
-                    defPwr = stats.fortitude + defence + Randy(2,0);
+                    alert ("don't just stand there, DO SOMETHING!");
                 }
             }
-            else if (reply == "flee" || reply == "run") {
-                stats.hp -= 3;
-                alert("you escaped ungracefully taking 3 damage");
-                room = prevRoom;
-                Room();
-            }
-            
             if (defPwr == 0){
                 defPwr = stats.fortitude + defence;
             }
             
         }//player's turn
+        
+        var defPwr = 0;
+        PlayerTurn();
+        
         if (enemy.hp <= 0){
             alert("the enemy bit the dust");
+            if (enemy.drop != null){
+                for (i = 0; i < rooms[room][1].length - 1; i++){
+                    if (rooms[room][1][i] == null){
+                        rooms[room][1][i] = enemy.drop;
+                        alert("the enemy dropped a " + enemy.drop.name);
+                        break;
+                    }
+                }
+            }
             break;
         }
+        
         {
             enemyAtk = enemy.damage + Randy(enemy.damage/3,enemy.damage/3);
             enemyAtk -= defPwr;
@@ -603,7 +640,7 @@ function Combat() {
                 enemyAtk = 0;
             }
             stats.hp -= enemyAtk;
-            alert("you were attacked for " + enemyAtk + "damage! \nyou now have " + stats.hp + " hp.")
+            alert("you were attacked for " + enemyAtk + " damage! \nyou now have " + stats.hp + " hp.")
         }//enemy's turn
         if (stats.hp <= 0){
             alert("you have been defeated in combat!");
@@ -615,6 +652,6 @@ function Combat() {
 }
 
 function Randy(max,min){
-    return Math.round(Math.random() * (max - min) ) + min;
+    return Math.round(Math.random() * (max - min)  + min);
 }
 
