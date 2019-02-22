@@ -576,21 +576,21 @@ function Combat() {
                         atkPwr += Randy(atkPwr/5,-atkPwr/5);
                         atkPwr -= enemy.fortitude;
                         atkPwr = Math.round(atkPwr);
-                    if (atkPwr <= 0){
-                        atkPwr = 0;
+                        if (atkPwr <= 0){
+                            atkPwr = 0;
+                        }
+                        enemy.hp -= atkPwr;
+                        alert("you attacked the " + enemy.name + " with your " + equipment.weapon.name + " for " + atkPwr + "!");
+                        alert("the " + enemy.name + " has " + enemy.hp + " hp");
                     }
-                    enemy.hp -= atkPwr;
-                    alert("you attacked the " + enemy.name + " with your " + equipment.weapon.name + " for " + atkPwr + "!");
-                    alert("the " + enemy.name + " has " + enemy.hp + " hp");
+                    else{
+                        fistAtk = Randy(4,0);
+                        enemy.hp -= fistAtk;
+                        alert("you punched the " + enemy.name + " for " + fistAtk + "!")
+                        alert("the " + enemy.name + " has " + enemy.hp + " hp");
+                    }
                     break;
                 }
-                    else{
-                    fistAtk = Randy(4,0);
-                    enemy.hp -= fistAtk;
-                    alert("you punched the " + enemy.name + " for " + fistAtk + "!")
-                    alert("the " + enemy.name + " has " + enemy.hp + " hp");
-                }
-}
                 else if (reply == "block" || reply == "defend"){
                     if (equipment.weapon != null){
                         defPwr = stats.fortitude + defence + equipment.weapon.damage;
