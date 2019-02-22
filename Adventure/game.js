@@ -585,7 +585,7 @@ function Combat() {
                     break;
                 }
                     else{
-                    fistAtk = Randy(2,0);
+                    fistAtk = Randy(4,0);
                     enemy.hp -= fistAtk;
                     alert("you punched the " + enemy.name + " for " + fistAtk + "!")
                     alert("the " + enemy.name + " has " + enemy.hp + " hp");
