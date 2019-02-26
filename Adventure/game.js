@@ -393,10 +393,10 @@ function PlayerMove() {
                         alert(inventory[i].note);
                         break;
                     }
-                }
-                else if (i == inventory.length - 1) {
-                    alert("you can't read that!");
-                }   
+                } 
+            }
+            else if (i == inventory.length - 1) {
+                alert("you can't read that!");
             }
         }
         //if you want to exit
