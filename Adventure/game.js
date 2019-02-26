@@ -388,15 +388,15 @@ function PlayerMove() {
         else if (reply == "read") {
             reply = prompt("what would you like to read?")
             for (i = 0; i < inventory.length; i++){
-                if (inventory.i != null){
+                if (inventory[i] != null){
                     if (inventory[i].name == reply){
                         alert(inventory[i].note);
                         break;
                     }
-                } 
-            }
-            else if (i == inventory.length - 1) {
-                alert("you can't read that!");
+                }
+				else if (i == inventory.length) {
+					alert("you can't read that!");
+				}
             }
         }
         //if you want to exit
