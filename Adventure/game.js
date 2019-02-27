@@ -110,11 +110,25 @@ var name = prompt("What! is your name?");
     }//river
 }//room look scripts
 {
-    var House = [rHouse, iHouse, eHouse, dHouse, lHouse];
-    var Basement = [rBasement, iBasement, eBasement, dBasement, lBasement];
-    var Clearing = [rClearing, iClearing, eClearing, dClearing, lClearing];
-    var River = [rRiver, iRiver, eRiver, dRiver, lRiver];
+    npcHouse = "bob";
+    npcBasement = null;
+    npcClearing = null;
+    npcRiver = null;
+}//room npcs
+{
+    var House = [rHouse, iHouse, eHouse, dHouse, lHouse, npcHouse];
+    var Basement = [rBasement, iBasement, eBasement, dBasement, lBasement, npcBasement];
+    var Clearing = [rClearing, iClearing, eClearing, dClearing, lClearing, npcClearing];
+    var River = [rRiver, iRiver, eRiver, dRiver, lRiver, npcRiver];
 } //room arrays
+{
+    roomNumbers = 0;
+    inventories = 1;
+    enemies = 2;
+    roomDirections = 3;
+    roomLooks = 4;
+    roomNpcs = 5;
+}//variables that help me with my rooms and stuff
 //where the equipment is stored
 var equipment = {
     helm: null,
@@ -133,6 +147,9 @@ var stats = {
     charisma: 3,
     fortitude: 2,
     intellegence: 3,
+    level: 1,
+    exp: 0,
+    expToLevel: 10,
 }
 
 //declares an aray where one can find information about the rooms
@@ -146,7 +163,6 @@ var inventory = [pants, null, null, null, null, null];
 
 //begin the game
 Game();
-
 //the main game shell
 function Game() {
     //this loop prevents the game from ending accidentally
@@ -222,7 +238,16 @@ function PlayerMove() {
                 }
             }
         }
-        //if the player drops an item
+        //if the player talks to bob the dolt
+        else if (reply == "npc" || reply == "talk" || reply == "talk to" || reply == "yeet") {
+            if (rooms[room][roomNpcs] != null){
+                NPC(rooms[room][roomNpcs]);
+            }
+            else{
+                alert("there isn't anyone here you dip stick")
+            }
+        }
+        //if ther player drops an item
         else if (reply == "drop" || reply == "throw"){
             reply = prompt("What do you want to drop?");
             var i = 0;
@@ -655,3 +680,27 @@ function Randy(max,min){
     return Math.round(Math.random() * (max - min)  + min);
 }
 
+function NPC(npcName){
+    if (npcName == "bob"){
+        function BOB(){
+            alert("you introduce yourself to the man... \nHe is the town drunk... \nHave fun!");
+            while(1==1){
+                reply = prompt('"Da ya lik tu go ta ta bar?" bob asks').toLowerCase;
+                if (reply == "y" || reply == "yes"){
+                    alert('"wel ten we shod go than" he gets up and stumbles around for a while presumably looking for the bar but he can\'t find it');
+                    alert("he stumbles into you and slumps to the ground looking depressed. \n\"I ned ta sit don ovr ther...\"");
+                    alert("you leave bob sitting in the dust.");
+                }
+                else{
+                    alert('"wel ten get yer hiny ot o her" he yells quite loudly at you his breath so pungent you can nearly see it.');
+                } 
+            }
+            
+            
+            
+        }//bob is a guy (hopefully).
+    }
+    else{
+        alert("there is no npc named " + npcName);
+    }
+}
