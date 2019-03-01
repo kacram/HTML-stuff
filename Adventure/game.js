@@ -4,6 +4,7 @@ var prevRoom = 0;
 //get the player's name
 var name = prompt("What! is your name?");
 
+var gold = 100;
 //init game variables
 {
     {
@@ -58,12 +59,17 @@ var name = prompt("What! is your name?");
     var rBasement = 1;
     var rClearing = 2;
     var rRiver = 3;
+    var rTown = 4;
+    var rShop = 5;
 } //room numbers
 {
+    //  name   |  north | east | south | west | up | down
     var dHouse = [null, null, rClearing, null, null, rBasement];
     var dBasement = [null, null, null, null, rHouse, null];
-    var dClearing = [rHouse, null, rRiver, null, null, null];
+    var dClearing = [rHouse, null, rRiver, rTown, null, null];
     var dRiver = [rClearing, null, null, null, null, null];
+    var dTown = [null, rClearing, rShop, null, null, null];
+    var dShop = [rTown, null, null, null, null, null]
 } //room to room interactions
 {
     var rat = {
@@ -88,12 +94,16 @@ var name = prompt("What! is your name?");
     var iBasement = [null, null, null, null, null, null];
     var iClearing = [null, null, null, null, null, null];
     var iRiver = [null, null, null, null, null, null];
+    var iTown = [null, null, null, null, null, null];
+    var iShop = [null, null, null, null, null, null];
 } //room inventories
 {
     var eHouse = null;
     var eBasement = rat;
     var eClearing = null;
     var eRiver = oldEnt;
+    var eTown = null;
+    var eShop = null;
 } //room enemies
 {
     {
@@ -103,23 +113,25 @@ var name = prompt("What! is your name?");
         var lBasement = "this is your basement. you keep several pickeled goods on the shelves just in case of emergency. in the corner there are several rusty swords that you used to use for practicing swordplay.";
     }//basement
     {
-        var lClearing = "you are in a small clearing with a densely forested area on most sides. your cottage lies to the north of here while a small spring lies to the south. there is a mountain off to the distance to the east and a village to the west.";
+        var lClearing = "you are in a small clearing with a densely forested area on most sides. your cottage lies to the north of here while a small spring lies to the south. there is a mountain off in the distance to the east and a village to the west.";
     }//clearing
     {
         var lRiver = "there is a little brook trickeling between the trees that caries down a small slope. the stream's origin is towards the east and it carries on towards the south. there is nothing but dense forest to the west. the clearing is to the north.";
     }//river
+    {
+        var lTown = "you are standing in the midst of a small ghost town abandoned around 2 years ago when the ents attacked. There are trees begining to grow in the dirty streets and buildings in the vacinity. there is still a gift shop running in the town to the south of you.";
+    }//town
+    {
+        var lShop = "you are in a shop. in on one side there is an old lady offering to sell you items. \nBronze sword:  100 gold \nPotion:   5 gold \nLeather Boots:   25 gold"
+    }//shop
 }//room look scripts
 {
-    npcHouse = "bob";
-    npcBasement = null;
-    npcClearing = null;
-    npcRiver = null;
-}//room npcs
-{
-    var House = [rHouse, iHouse, eHouse, dHouse, lHouse, npcHouse];
-    var Basement = [rBasement, iBasement, eBasement, dBasement, lBasement, npcBasement];
-    var Clearing = [rClearing, iClearing, eClearing, dClearing, lClearing, npcClearing];
-    var River = [rRiver, iRiver, eRiver, dRiver, lRiver, npcRiver];
+    var House = [rHouse, iHouse, eHouse, dHouse, lHouse];
+    var Basement = [rBasement, iBasement, eBasement, dBasement, lBasement];
+    var Clearing = [rClearing, iClearing, eClearing, dClearing, lClearing];
+    var River = [rRiver, iRiver, eRiver, dRiver, lRiver];
+    var Town = [rTown, iTown, eTown, dTown, lTown];
+    var Shop = [rShop, iShop, eShop, dShop, lShop];
 } //room arrays
 {
     roomNumbers = 0;
@@ -127,7 +139,6 @@ var name = prompt("What! is your name?");
     enemies = 2;
     roomDirections = 3;
     roomLooks = 4;
-    roomNpcs = 5;
 }//variables that help me with my rooms and stuff
 //where the equipment is stored
 var equipment = {
@@ -153,7 +164,7 @@ var stats = {
 }
 
 //declares an aray where one can find information about the rooms
-var rooms = [House, Basement, Clearing, River];
+var rooms = [House, Basement, Clearing, River, Town, Shop];
 
 //sets your starting room
 var room = rHouse;
@@ -236,15 +247,6 @@ function PlayerMove() {
                 else if(k == 5){
                     alert("I don't see any " + reply + "s in here!");
                 }
-            }
-        }
-        //if the player talks to bob the dolt
-        else if (reply == "npc" || reply == "talk" || reply == "talk to" || reply == "yeet") {
-            if (rooms[room][roomNpcs] != null){
-                NPC(rooms[room][roomNpcs]);
-            }
-            else{
-                alert("there isn't anyone here you dip stick")
             }
         }
         //if ther player drops an item
@@ -680,7 +682,7 @@ function Randy(max,min){
     return Math.round(Math.random() * (max - min)  + min);
 }
 
-function NPC(npcName){
+function NPC(npcName) {
     if (npcName == "bob"){
         function BOB(){
             alert("you introduce yourself to the man... \nHe is the town drunk... \nHave fun!");
@@ -702,5 +704,33 @@ function NPC(npcName){
     }
     else{
         alert("there is no npc named " + npcName);
+    }
+}
+
+function Shop() {
+    if (rooms[room][roomNumbers] = rShop){
+        let shop = [bronzeSword, healthPotion, leatherBoots];
+        let shopPrice = [100, 10, 25];
+        while(1==1){
+            item = prompt("what do you buy").toLowerCase
+            for(i = 0; i <= shop.length; i++){
+                if(shop[i] == item){
+                    if (gold >= shopPrice[i]){
+                        for (i = 0; i < inventory.length; i++){
+                            if (inventory[i] == null){
+                                gold -= price;
+                                inventory[i] = item;
+                                alert("you bought a " + item + " for " + price + " gold.");
+                                break;
+                            }
+                            else if(i >= inventory.length){
+                                alert("you don't have the inventory space.")
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
