@@ -6,9 +6,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.css">
+		
         <title>My Contacts</title>
-    
+		
     </Head>
     
     <body>
@@ -24,6 +25,8 @@
 			<input type="text" id="addContacts" placeholder="Add Contacts">
 			
 			<button id="addContactBtn" type=button onclick="AddContact()">Add Contact</button>
+			
+			<button id="sortBtn" type=button onclick="Sort()">Sort List</button>
             
 			<ul id="contacts" class="collection with-header">
 			
@@ -90,12 +93,18 @@
 				<li class="collection-item">
 					<a href="#">DCBAZZZZ</a>
 				</li>
+				
+				<li class="collection-item">
+					<a href="#">amy the third</a>
+				</li>
 			
 			</ul>
 			
+			<script src = "javascript.js"></script>
+				
         </div>
     
-		<script src = "javascript.js">
+		
 		
     </body>
 
