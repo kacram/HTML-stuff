@@ -33,9 +33,11 @@ function FilterNames(){
 
 
 function AddContact() {
-	alert("this dosen't work yet....");
-	prompt("on a scale from 1 to alligator how lengthy is your happy right now?");
-	alert("interesting");
+	var woot = document.getElementById("contacts");
+	c = woot.getElementsByTagName("a");
+	var contact = document.getElementById("addContacts").textContent;
+	List<contact> list = new ArrayList<>();
+	list.add(contact);
 }
 
 
