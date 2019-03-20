@@ -13,10 +13,10 @@
 			}
 			
 			h1{
-				color:beige;
+				color: f2220f;
 				margin:15px 0px 5px 0px;
 				font-family: sans-serif;
-				text-shadow: 3px 3px 3px black;
+				text-shadow: 2px 2px 1px black;
 				font-size: 25px;
 				position: fixed;
 				left: 100px;
@@ -28,6 +28,30 @@
 				font-family: "Wingdings", "arial";
 				margin:0;
 			}
+			
+			div#square{
+				background-color: beige;
+				width: 100px;
+				height: 100px;
+				position:absolute;
+				left: 230px;
+				top: 200px;
+			}
+			
+			div#circle{
+				background-color: bisque;
+				width: 100px;
+				height: 100px;
+				border-radius: 100%;
+				position: absolute;
+				top: 200px;
+				left: 500px;
+			}
+			
+			button#divBtn{
+				width: 100px;
+				height: 100px;
+			}
 		
 		</style>
 	
@@ -37,6 +61,25 @@
 	
 		<h1>Time to practice my css. here we go!</h1>
 		<h3>rEMEMBER tO kEEP dRINKING oVALTINE</h3>
+		
+		<div id="square">
+		
+			<button id="divBtn" type=button style="background:transparent; border:none; color:transparent;"  onclick="document.getElementByID('oof').play"></button>
+		
+		</div>
+		
+		<div id="circle" type="audio/mpeg"></div>
+		
+		<audio id="oof" controls src="oof.mp3"></audio>
+		
+		<script>
+			
+			var audio = document.getElementByID("oof");
+			function PlaySound(){
+				audio.Play();
+			}
+		
+		</script>
 		
 	</body>
 	
