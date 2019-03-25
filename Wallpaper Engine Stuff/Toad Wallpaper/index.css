@@ -23,7 +23,7 @@ body
     left: 0px;
     background-position: 0 0;
     background-repeat: repeat-x;
-    animation: animate 3s linear infinite;
+    animation: animate 1000000s linear infinite;
 }
 .fg
 {
@@ -42,6 +42,6 @@ body
         background-position:0 0;
     }
     to{
-        background-position: 31.7% 0;
+        background-position: 45000000px 0px;
     }
 }
