@@ -1,0 +1,47 @@
+body
+{
+    margin: 0;
+    padding: 0;
+}
+
+.bg
+{
+    position: absolute;
+    background: rgb(253, 249, 64);
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+}
+.mg
+{
+    position: absolute;
+    background: rgba(255, 255, 255, 0) url(midgroung.png);
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    background-position: 0 0;
+    background-repeat: repeat-x;
+    animation: animate 3s linear infinite;
+}
+.fg
+{
+    position: absolute;
+    background: rgba(255, 255, 255, 0) url(Foreground.png);
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    background-size: cover;
+}
+
+@keyframes animate
+{
+    from{
+        background-position:0 0;
+    }
+    to{
+        background-position: 31.7% 0;
+    }
+}
