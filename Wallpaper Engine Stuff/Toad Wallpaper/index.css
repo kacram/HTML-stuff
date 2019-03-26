@@ -28,7 +28,7 @@ body
 .fg
 {
     position: absolute;
-    background: rgba(255, 255, 255, 0) url(Foreground-full.png);
+    background: rgba(255, 255, 255, 0) url(Foreground.png);
     height: 100%;
     width: 100%;
     top: 0px;
