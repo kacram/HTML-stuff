@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+	
+		
+		
+	</head>
+
+	<body>
+	
+		<canvas id="canvas" width="800" height="800" style="background-color: black"></canvas>
+		
+		<script>
+		
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+			
+			var woot = 1000
+			
+			setInterval(DrawClock(0,0,800,800), 1000);
+
+			
+			function DrawClock(x1,y1,x2,y2){
+			
+				var radius = Math.min((x2 - x1 / 2),(y2 - y1 / 2))/2;
+				ctx.translate(x1 + (x2 - x1 / 2)/2, y1 + (y2 - y1 / 2)/2);
+				radius = radius * 0.9;
+				
+				ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+				ctx.fillStyle = "white";
+				ctx.fill();
+				
+				var grad;
+				
+				ctx.beginPath();
+				grad = ctx.createRadialGradient(0, 0, radius * 0.95, 0, 0, radius * 1.05);
+				grad.addColorStop(0, "black");
+				grad.addColorStop(.5, "white");
+				grad.addColorStop(1, "black");
+				ctx.strokeType = grad;
+				ctx.lineWidth = radius * 0.1;
+				ctx.stroke();
+				
+				ctx.beginPath();
+				ctx.arc(0, 0, radius * 0.1, 0, 2 * Math.PI);
+				ctx.fillStyle = "black";
+				ctx.fill();
+				
+				var ang;
+				var num;
+				ctx.font = radius * 0.15 + "px arial";
+				ctx.textBaselne = "middle";
+				ctx.textAlign = "center";
+				for(num = 0; num < 12; num++){
+					
+					ang = num * Math.PI / 6;
+					ctx.rotate(ang);
+					ctx.translate(0,-radius * 0.85);
+					ctx.rotate(-ang);
+					ctx.fillText(num.toString(), 0, 0);
+					ctx.rotate(ang);
+					ctx.translate(0,radius * 0.85);
+					ctx.rotate(-ang);
+					
+				}
+				
+				var now = new Date();
+				var hour = now.getHours();
+				var minute = now.getMinutes();
+				var second = now.getSeconds();
+				
+				hour = hour%12;
+				hour = (hour*Math.PI/6) + (minute*Math.Pi/(6*60)) + (second*Math.PI/(360*6));
+				DrawHand(ctx, second, radius*0.9, radius*0.02);
+				
+				minute = (minute*Math.Pi/(6*60)) + (second*Math.Pi/(6*320));
+				DrawHand(ctx, second, radius*0.9, radius*0.02);
+				ctx.moveTo(0,0);
+				
+				second = (second*Math.PI/30);
+				DrawHand(ctx, second, radius*0.9, radius*0.02);
+			}
+			
+			function DrawHand(ctx, pos, length, width) {
+				
+				ctx.beginPath();
+				ctx.lineWidth = width;
+				ctx.lineCap = "round";
+				ctx.moveTo(0,0);
+				ctx.rotate(pos);
+				ctx.lineTo(0, -length);
+				ctx.stroke();
+				ctx.rotate(-pos);
+				
+			}
+		</script>
+	
+	</body>
+
+</html>
