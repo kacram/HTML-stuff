@@ -1,0 +1,18 @@
+/*stylesheet for Mobile app*/
+
+/*reset css*/
+html,body,div,h1,h2,h3,h4,h5,h6,p,ul,ol,li,header,footer,nav{
+	margin:0;
+	padding:0;
+}
+
+/*uinversal style*/
+body{
+	background-color: deepskyblue;
+}
+
+div#content{
+	width: 1200px;
+	height: 800px;
+	background-color: beige;
+}
