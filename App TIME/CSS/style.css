@@ -16,3 +16,42 @@ div#content{
 	height: 800px;
 	background-color: beige;
 }
+
+header{
+	width: 96%;
+	padding: 10px;
+}
+
+header h1{
+	color: blueviolet;
+	font-size: 40px;
+	font-family: cursive, sans-serif;
+}
+
+div#content{
+	width: 100%;
+	background-color: azure;
+}
+
+nav{
+	width:100%;
+	background-color: red;
+}
+
+nav ul{
+	display:block;
+	margin:auto;
+	color:cornflowerblue;
+	font-family: monospace;
+	font-size:1.1em;
+}
+
+nav ul li{
+	float:left;
+	padding: 5px 15px;
+}
+
+.keepopen{
+	
+}
+
