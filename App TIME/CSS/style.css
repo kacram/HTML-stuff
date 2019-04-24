@@ -11,9 +11,12 @@ body{
 	background-color: deepskyblue;
 }
 
-div#content{
-	width: 1200px;
-	height: 800px;
+img:hover{
+	cursor: crosshair;
+}
+
+div#container{
+	width: 100%;
 	background-color: beige;
 }
 
@@ -28,6 +31,15 @@ header h1{
 	font-family: cursive, sans-serif;
 }
 
+footer{
+	text-align: center;
+	position:absolute;
+	bottom:0;
+	left: 0;
+	width:100%;
+	background-color:aquamarine;
+}
+
 div#content{
 	width: 100%;
 	background-color: azure;
@@ -35,7 +47,7 @@ div#content{
 
 nav{
 	width:100%;
-	background-color: red;
+	background-color: white;
 }
 
 nav ul{
@@ -44,14 +56,47 @@ nav ul{
 	color:cornflowerblue;
 	font-family: monospace;
 	font-size:1.1em;
+	text-align:center;
 }
 
 nav ul li{
+	text-align: center;
 	float:left;
+	display:block;
 	padding: 5px 15px;
+	border-right: 1px solid orange;
+	text-decoration: none;
+}
+nav ul li a:hover{
+	float:left;
+	display:block;
+	color: rgb(255, 0, 191);
+	cursor: pointer;
 }
 
-.keepopen{
+@media screen and (max-width: 480px){
+	nav ul li{
+		width: 100%;
+		float:none;
+		display:block;
+		padding: 15px 10px;
+		border-top: 1px solid orange;
+		text-decoration: none;
+		border-bottom: 1px solid orange;
+	}
 	
+	nav ul li a:hover{
+		width: 300px;
+		float:none;
+		display:block;
+		color: rgb(255, 0, 191)	;
+		cursor: pointer;
+	}
 }
+
+div.keepopen{
+	clear: both;
+}
+
+
 
