@@ -1,0 +1,44 @@
+
+
+html,body,div,h1,h2,h3,h4,h5,h6,p,ul,ol,li,header,footer,nav{
+	margin:0;
+	padding:0;
+}
+
+nav div{
+	width:100%;
+	height:29px%;
+	background-color:cornflowerblue;
+}
+
+nav ul li{
+	text-align: center;
+	float:left;
+	display:block;
+	padding: 5px;
+	width: 25%;
+	border-right: 1px solid orange;
+	text-decoration: none;
+	background-color:#fff2e6;
+}
+
+nav ul li a{
+	width:0%;
+}
+
+nav ul li a:hover{
+	color: rgb(255, 116, 220);
+	cursor: pointer;
+	width: 0%;
+}
+
+@media screen and (max-width: 480px){
+	nav ul li{
+		width: 100%;
+		float:none;
+		display:block;
+		padding: 15px 10px;
+		border-top: 1px solid orange;
+		text-decoration: none;
+		border-bottom: 1px solid orange;
+	}

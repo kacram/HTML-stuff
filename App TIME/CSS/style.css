@@ -66,6 +66,7 @@ nav ul li{
 	padding: 5px 15px;
 	border-right: 1px solid orange;
 	text-decoration: none;
+	background-color:#fff2e6;
 }
 nav ul li a:hover{
 	float:left;
