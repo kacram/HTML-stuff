@@ -6,11 +6,23 @@ html,body,div,h1,h2,h3,h4,h5,h6,p,ul,ol,li,header,footer,nav{
 	padding:0;
 }
 
+h3{
+	margin: 4px;
+	font: 
+}
+
 /*uinversal style*/
 body{
 	background-color: deepskyblue;
 }
-
+img{
+	display: block;
+	width: 50px;
+	float: left;
+	margin: 16px 5px;
+	position: relative;
+	
+}
 img:hover{
 	cursor: crosshair;
 }
