@@ -23,19 +23,19 @@
 			
 			<div id="content">
 				
-				<h3>Home</h3>
+				<h3 onclick="alert(getWidth());">Home</h3>
 				
 				<nav id="nav">
 				
 					<ul>
 					
-						<li><a href="index.html">Home</a></li>
+						<li id="li"><a href="index.html">Home</a></li>
 						
-						<li><a href="pages/products.html">Products &amp; Services</a></li>
+						<li id="li"><a href="pages/products.html">Products &amp; Services</a></li>
 						
-						<li><a href="#">Favorites</a></li>
+						<li id="li"><a href="pages/Favorites.html">Favorites</a></li>
 						
-						<li><a href="#">Contacts</a></li>
+						<li id="li"><a href="Pages/Contacts.html">Contacts</a></li>
 					
 					</ul>
 				
@@ -52,6 +52,27 @@
 			</div>
 		
 		</div>
+		
+		<script>
+		
+		function getWidth() {
+		  return Math.max(
+			document.body.scrollWidth,
+			document.documentElement.scrollWidth,
+			document.body.offsetWidth,
+			document.documentElement.offsetWidth,
+			document.documentElement.clientWidth
+		  );
+		}
+			
+			alert(getWidth());
+			
+		document.getElementById("li"){
+			li.style.width = getWidth + "px";
+		}
+
+		
+		</script>
 		
 	</body>
 	
