@@ -15,7 +15,7 @@ h3{
 body{
 	background-color: deepskyblue;
 }
-img{
+img#logo{
 	display: block;
 	width: 50px;
 	float: left;
@@ -45,7 +45,7 @@ header h1{
 
 footer{
 	text-align: center;
-	position:absolute;
+	position:fixed;
 	bottom:0;
 	left: 0;
 	width:100%;
@@ -76,22 +76,27 @@ nav ul li{
 	text-align: center;
 	float:left;
 	display:block;
-	padding: 5px 0px;
-	border-right: 1px solid orange;
 	text-decoration: none;
 	background-color:#fff2e6;
 	width: 25%;
 }
-nav ul li a:hover{
-	float:left;
-	display:block;
-	color: rgb(255, 0, 191);
-	cursor: pointer;
-	padding: 0px;
+
+nav ul li a{
 	text-align: center;
+	display:block;
+	padding: 5px 0px;
 }
 
-@media screen and (max-width: 480px){
+nav ul li a:hover{
+	text-align: center;
+	display:block;
+	padding:5px 0px;
+	text-decoration: none;
+	color: rgb(255, 0, 191);
+	cursor: pointer;
+}
+
+@media screen and (max-width: 660px){
 	nav ul li{
 		width: 100%;
 		float:none;
@@ -113,6 +118,12 @@ nav ul li a:hover{
 
 div.keepopen{
 	clear: both;
+}
+
+figure{
+	float: left;
+	width: 40%;
+	text-align: center;
 }
 
 
