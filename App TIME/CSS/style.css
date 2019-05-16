@@ -72,6 +72,16 @@ nav ul{
 	width: 100%;
 }
 
+a#gitHub{
+	display: block;
+	margin: 5px 40%;
+	width: 20%;
+	text-align: center;
+	border-left: orange;
+	border-right: orange;
+	background-color: beige;
+}
+
 nav ul li{
 	text-align: center;
 	float:left;
@@ -146,4 +156,8 @@ textarea{
 	margin: 5px 10%;
 }
 
-
+button{
+	width: 30%;
+	height: 25px;
+	margin: 10px 35%;
+}
