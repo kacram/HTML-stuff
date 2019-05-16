@@ -126,5 +126,24 @@ figure{
 	text-align: center;
 }
 
+span{
+	display: block;
+	text-align: center;
+	align-content: center;
+}
+
+input{
+	width: 60%;
+	margin: 8px 20%;
+	text-align: center;
+}
+
+textarea{
+	padding: 5px 5px;
+	display: block;
+	width: 80%;
+	align-content: center;
+	margin: 5px 10%;
+}
 
 
